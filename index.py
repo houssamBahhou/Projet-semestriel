@@ -1,5 +1,6 @@
 import base64
 import datetime
+import imp
 import io
 
 from jupyter_dash import JupyterDash
@@ -13,6 +14,7 @@ import dash
 import pandas as pd
 from app import app
 from uploading import uploading_layout, overview_layout
+from processing import processing_layout
 import dash_bootstrap_components as dbc
 
 
@@ -35,6 +37,7 @@ app.layout = dbc.Container([ # this code section taken from Dash docs https://da
     dbc.Row(dbc.Col(html.H1("NPS prediction",
                             style={"textAlign": "center"}), width=12)),
     html.Hr(),
+    dcc.Store(id='raw-data'),   
     dbc.Row(dbc.Col(uploading_layout, width=12), className="mb-3"),
     dbc.Row(dbc.Col(app_tabs, width=12), className="mb-3"),
     html.Div(id='interface',children=[]),
@@ -49,7 +52,7 @@ def switch_tab(tab_chosen):
     if tab_chosen == "tab-mentions":
         return [overview_layout]
     elif tab_chosen == "tab-trends":
-        return []
+        return [processing_layout]
     elif tab_chosen == "tab-other":
         return []
     return html.P("This shouldn't be displayed for now...")
