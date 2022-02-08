@@ -1,0 +1,3 @@
+docker build -t nps_app .
+docker run -p 8000:8000 nps_app
+open the url http://localhost:8000
